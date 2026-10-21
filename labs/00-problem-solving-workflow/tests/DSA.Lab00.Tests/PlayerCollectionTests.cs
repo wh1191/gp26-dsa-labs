@@ -50,6 +50,16 @@ public sealed class PlayerCollectionTests
     }
 
     [Test]
+    public void FindHighestScore_CheckIfCollectionNotEmpty()
+    {
+        PlayerCollection collection = CreateCollection();
+
+        Player? player = collection.FindHighestScore();
+
+        Assert.That(player, Is.Not.Null);
+    }
+
+    [Test]
     public void ContainsName_ReturnsTrueWhenNameExists()
     {
         PlayerCollection collection = CreateCollection();
