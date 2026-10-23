@@ -9,8 +9,8 @@ Console.WriteLine();
 int[] sorted = { 2, 5, 8, 12, 16, 23, 38, 41, 56, 72, 91 };
 int target = 41;
 
-Console.WriteLine($"Linear search for {target}: index {SearchAlgorithms.LinearSearch(sorted, target)}");
-Console.WriteLine($"Binary search for {target}: index {SearchAlgorithms.BinarySearch(sorted, target)}");
+Console.WriteLine($"Linear search for {target}: index {SearchAlgorithms.LinearSearch(sorted, target, out int totalComparisonsLinear)}");
+Console.WriteLine($"Binary search for {target}: index {SearchAlgorithms.BinarySearch(sorted, target, out int totalComparisonsBinary)}");
 
 int[] unsorted = { 7, 2, 9, 1, 5, 4 };
 Console.WriteLine();
@@ -32,21 +32,27 @@ static void RunBenchmark(int count)
     // Repeat enough times to make the difference easier to observe.
     int repetitions = count <= 10_000 ? 500 : count <= 100_000 ? 100 : 10;
 
+    int totalComparisonsLinear = 0;
     Stopwatch sw = Stopwatch.StartNew();
     for (int i = 0; i < repetitions; ++i)
     {
-        SearchAlgorithms.LinearSearch(values, missingTarget);
+        SearchAlgorithms.LinearSearch(values, missingTarget, out totalComparisonsLinear);
     }
     sw.Stop();
     double linearMicroseconds = sw.Elapsed.TotalMicroseconds / repetitions;
 
     sw.Restart();
+    //totalComparisons = 0;
+    int totalComparisonsBinary = 0;
     for (int i = 0; i < repetitions; ++i)
     {
-        SearchAlgorithms.BinarySearch(values, missingTarget);
+        SearchAlgorithms.BinarySearch(values, missingTarget, out totalComparisonsBinary);
     }
     sw.Stop();
     double binaryMicroseconds = sw.Elapsed.TotalMicroseconds / repetitions;
 
-    Console.WriteLine($"n={count,9:N0} | linear ~{linearMicroseconds,10:F2} us | binary ~{binaryMicroseconds,10:F2} us");
+    //Console.WriteLine($"n={count,9:N0} | linear ~{linearMicroseconds,10:F2} us | linear comparisons {totalComparisonsLinear} " +
+    //    $"| binary ~{binaryMicroseconds,10:F2} us | binary comparisons {totalComparisonsBinary}");
+    Console.WriteLine($"n={count,9:N0} | linear ~{linearMicroseconds,10:F2} us " +
+        $"| binary ~{binaryMicroseconds,10:F2} us | binary comparisons {totalComparisonsBinary}");
 }

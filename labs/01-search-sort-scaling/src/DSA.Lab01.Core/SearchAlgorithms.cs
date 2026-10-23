@@ -34,15 +34,17 @@ namespace DSA.Lab01
          * Since linear search goes through elements one by one, if the target is at the last element of the array or not in the array at all, 
          * the algorithm must inspect all the elements. This means that the number of operations scales directly with O(n).
          */
-        public static int LinearSearch(int[] values, int target)
+        public static int LinearSearch(int[] values, int target, out int comparisons)
         {
             if (values == null)
             {
                 throw new ArgumentNullException(nameof(values));
             }
 
+            comparisons = 0;
             for (int i = 0; i < values.Length; ++i)
             {
+                comparisons++; // Counts every time an element is inspected/compared
                 if (values[i] == target)
                 {
                     return i;
@@ -64,7 +66,7 @@ namespace DSA.Lab01
          * on every step). For example, an array of 1 000 000 elements takes a maximum of about 20 steps to search (2^20 is 
          * approximately 1 000 000). 
          */
-        public static int BinarySearch(int[] sortedValues, int target) {
+        public static int BinarySearch(int[] sortedValues, int target, out int comparisons) {
             if (sortedValues == null) {
                 throw new ArgumentNullException(nameof(sortedValues));
             }
@@ -75,6 +77,7 @@ namespace DSA.Lab01
                 Console.WriteLine("Before Binary Search: " + string.Join(", ", sortedValues));
             }*/
 
+            comparisons = 0; // Initialize the counter at the start
             int low = 0;
             int high = sortedValues.Length - 1;
 
@@ -83,11 +86,15 @@ namespace DSA.Lab01
 
                 //Console.WriteLine("Current values: [middle: " + middle + "], [low: " + low + "], [high: " + high + "]");
 
+                // First comparison, checking if it equals the target
+                comparisons++;
                 if (sortedValues[middle] == target) {
                     //Console.WriteLine("Found target value!");
                     return middle;
                 }
 
+                // Second comparison, checking if it's less than the target
+                comparisons++;
                 if (sortedValues[middle] < target) {
                     //Console.WriteLine("Going to the right.");
                     low = middle + 1;

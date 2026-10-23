@@ -10,8 +10,8 @@ namespace DSA.Lab01.Tests
         public void LinearSearch_ReturnsMatchingIndex()
         {
             int[] values = { 4, 9, 12, 20 };
-
-            int result = SearchAlgorithms.LinearSearch(values, 12);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.LinearSearch(values, 12, out totalComparisons);
 
             Assert.That(result, Is.EqualTo(2));
         }
@@ -20,8 +20,8 @@ namespace DSA.Lab01.Tests
         public void LinearSearch_ReturnsMinusOneWhenMissing()
         {
             int[] values = { 4, 9, 12, 20 };
-
-            int result = SearchAlgorithms.LinearSearch(values, 7);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.LinearSearch(values, 7, out totalComparisons);
 
             Assert.That(result, Is.EqualTo(-1));
         }
@@ -30,8 +30,8 @@ namespace DSA.Lab01.Tests
         public void LinearSearch_ReturnsMinusOneForEmptyArray()
         {
             int[] values = { };
-
-            int result = SearchAlgorithms.LinearSearch(values, 7);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.LinearSearch(values, 7, out totalComparisons);
 
             Assert.That(result, Is.EqualTo(-1));
         }
@@ -40,8 +40,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_ReturnsMatchingIndex()
         {
             int[] values = { 2, 5, 8, 12, 16, 23, 38 };
-
-            int result = SearchAlgorithms.BinarySearch(values, 16);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 16, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(4));
         }
@@ -50,8 +50,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_FindsFirstElement()
         {
             int[] values = { 2, 5, 8, 12, 16 };
-
-            int result = SearchAlgorithms.BinarySearch(values, 2);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 2, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(0));
         }
@@ -60,8 +60,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_FindsLastElement()
         {
             int[] values = { 2, 5, 8, 12, 16 };
-
-            int result = SearchAlgorithms.BinarySearch(values, 16);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 16, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(4));
         }
@@ -70,8 +70,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_ReturnsMinusOneWhenMissing()
         {
             int[] values = { 2, 5, 8, 12, 16 };
-
-            int result = SearchAlgorithms.BinarySearch(values, 7);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 7, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(-1));
         }
@@ -80,8 +80,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_ReturnsMinusOneForEmptyArray()
         {
             int[] values = { };
-
-            int result = SearchAlgorithms.BinarySearch(values, 67);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 67, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(-1));
         }
@@ -90,8 +90,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_FindsElementInSingleElementArray()
         {
             int[] values = { 67 };
-
-            int result = SearchAlgorithms.BinarySearch(values, 67);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 67, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(0));
         }
@@ -100,8 +100,8 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_ReturnsMinusOneForMissingInSingleElementArray()
         {
             int[] values = { 67 };
-
-            int result = SearchAlgorithms.BinarySearch(values, 69);
+            int totalComparisons = 0;
+            int result = SearchAlgorithms.BinarySearch(values, 69, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(-1));
         }
@@ -110,9 +110,9 @@ namespace DSA.Lab01.Tests
         public void BinarySearch_ReturnsMinusOneWhenTargetIsBetweenValues()
         {
             int[] values = { 2, 4, 8, 16, 32 };
-
+            int totalComparisons = 0;
             // 7 is between 4 and 8, but not in the array
-            int result = SearchAlgorithms.BinarySearch(values, 7);
+            int result = SearchAlgorithms.BinarySearch(values, 7, out int totalComparions);
 
             Assert.That(result, Is.EqualTo(-1));
         }
