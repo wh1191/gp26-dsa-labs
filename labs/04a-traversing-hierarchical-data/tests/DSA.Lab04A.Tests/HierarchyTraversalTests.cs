@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System;
 
 namespace DSA.Lab04A.Tests
 {
@@ -110,6 +111,33 @@ namespace DSA.Lab04A.Tests
             combat.AddChild("Bow");
 
             return survival;
+        }
+
+        [Test]
+        public void CountNodes_NullRoot_ThrowsArgumentNullException(){
+            //HierarchyNode<string> root = null;
+            //Assert.Throws<ArgumentNullException>(() => HierarchyTraversal.CountNodes(root));
+            Assert.Throws<ArgumentNullException>(() => HierarchyTraversal.CountNodes((HierarchyNode<string>)null!));
+        }
+
+        [Test]
+        public void Contains_FindsValueAtRoot() {
+            var root = new HierarchyNode<string>("Parent");
+            root.AddChild("Child1");
+            root.AddChild("Child2");
+
+            Assert.That(HierarchyTraversal.Contains(root, "Parent"), Is.True);
+        }
+
+        [Test]
+        public void MaxDepth_LinearTree_ReturnsCorrectEdgeCount() {
+            var root = new HierarchyNode<int>(1);
+            var level1 = root.AddChild(2);
+            var level2 = level1.AddChild(3);
+
+            Assert.That(HierarchyTraversal.MaxDepth(root), Is.EqualTo(2));
+            Assert.That(HierarchyTraversal.CountNodes(root), Is.EqualTo(3));
+            Assert.That(HierarchyTraversal.DepthFirstPreOrder(root), Is.EqualTo(new[] { 1, 2, 3 }));
         }
     }
 }
