@@ -16,6 +16,34 @@ string[] nodes =
     "SecretRoom"
 };
 
+/**
+ * Where is the cycle?
+ * The cycle is between Hall and Courtyard (can loop indefinitely, 
+ * due to directed edges between those two)
+ * 
+ * Can Entrance reach BossRoom?
+ * Yes, there are 2 ways:
+ * Entrance -> Hall -> Armory -> BossRoom
+ * Entrance -> Hall -> Courtyard -> BossRoom
+ * 
+ * Can Entrance reach SecretRoom?
+ * No (completely disconnected from the graph)
+ * 
+ * Can BossRoom reach Entrance?
+ * No (no directed edges that leads from BossRoom to Entrance, only one way from Entrance to BossRoom)
+ * 
+ * Which nodes can I go to directly from Hall?
+ * Armory
+ * Courtyard
+ * 
+ * Does the representation match the workload?
+ * No. The worload involves frequent traversals (repeatedly asking for neighbors), meaning the EdgeListGraph 
+ * needs to scan through every single edge in the entire graph (that's why it's O(E) time complexity). 
+ * 
+ * An Adjacency List, where each node directly stores its own specific list of outgoing neighbors, is more 
+ * preferable here because it makes neighbor lookups significantly faster.
+ * 
+ */
 DirectedEdge[] edges =
 {
     new DirectedEdge("Entrance", "Hall"),

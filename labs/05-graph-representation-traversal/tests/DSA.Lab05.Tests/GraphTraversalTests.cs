@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.Linq;
 
 namespace DSA.Lab05.Tests
 {
@@ -162,16 +163,58 @@ namespace DSA.Lab05.Tests
         }
 
         [Test]
-        public void IsReachableBfs_StartEqualsTargetIsReachable()
-        {
+        public void IsReachableBfs_StartEqualsTargetIsReachable() {
             GraphFixture fixture = BuildExample();
 
-            Assert.That(
-                GraphTraversal.IsReachableBfs(
-                    fixture.Adjacency,
-                    "Entrance",
-                    "Entrance"),
-                Is.True);
+            Assert.That(GraphTraversal.IsReachableBfs(fixture.Adjacency, "Entrance", "Entrance"), Is.True);
+        }
+
+        [Test]
+        public void IsReachableDfs_StartEqualsTargetIsReachable() {
+            GraphFixture fixture = BuildExample();
+
+            Assert.That(GraphTraversal.IsReachableDfs(fixture.Adjacency, "Entrance", "Entrance"), Is.True);
+        }
+
+        [Test]
+        public void BreadthFirstOrder_StartingFromIsolatedNode_ReturnsOnlyStartNode() {
+            GraphFixture fixture = BuildExample();
+
+            Assert.That(GraphTraversal.BreadthFirstOrder(fixture.Adjacency, "SecretRoom"),
+                Is.EqualTo(new[] { "SecretRoom" }));
+        }
+
+        [Test]
+        public void BreadthFirstOrder_StartNodeHasNoOutgoingEdges_ReturnsOnlyStartNode() {
+            GraphFixture fixture = BuildExample();
+
+            Assert.That(GraphTraversal.BreadthFirstOrder(fixture.Adjacency, "SecretRoom"), 
+                Is.EqualTo(new[] { "SecretRoom" }));
+        }
+
+        [Test]
+        public void DepthFirstOrder_GraphWithSelfLoop_VisitsNodeOnceWithoutInfiniteLoop() {
+            string[] nodes = { "A" };
+            DirectedEdge[] edges = { new DirectedEdge("A", "A") }; // Self-loop
+            var graph = new AdjacencyGraph(nodes, edges);
+            var result = GraphTraversal.DepthFirstOrder(graph, "A");
+
+            Assert.That(result, Is.EqualTo(new[] { "A" }));
+        }
+
+        [Test]
+        public void BreadthFirstOrder_MultiplePathsToSameNode_VisitsTargetOnce() {
+            GraphFixture fixture = BuildExample();
+
+            var result = GraphTraversal.BreadthFirstOrder(fixture.Adjacency, "Entrance");
+
+            /** 
+             * BossRoom can be reached via Entrance -> Hall -> Armory -> BossRoom 
+             * But also via Entrance -> Hall -> Courtyard -> BossRoom 
+             * Check if it appears only once in the traversal order
+             */
+            int bossRoomCount = result.Count(node => node == "BossRoom");
+            Assert.That(bossRoomCount, Is.EqualTo(1));
         }
 
         private static GraphFixture BuildExample()

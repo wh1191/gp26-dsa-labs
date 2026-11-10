@@ -9,6 +9,16 @@ namespace DSA.Lab05
     ///
     /// The node buckets are prepared for you. Complete the edge-grouping step.
     /// </summary>
+
+    /**
+     * Vocabulary:
+     * 
+     * node / vertex   one location or state
+     * edge            one connection between nodes
+     * directed edge   connection with a specific From -> To direction
+     * path            sequence of connected edges
+     * cycle           route that can lead back to a previously visited node
+     */
     public sealed class AdjacencyGraph
     {
         private readonly Dictionary<string, List<string>> _neighborsByNode =
@@ -45,6 +55,7 @@ namespace DSA.Lab05
 
                 // TODO:
                 // Add edge.To to the adjacency list belonging to edge.From.
+                _neighborsByNode[edge.From].Add(edge.To);
             }
         }
 
